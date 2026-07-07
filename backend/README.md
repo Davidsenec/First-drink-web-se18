@@ -11,8 +11,12 @@ To make package management and virtual environments fast and reliable, we use a 
 Before you start, make sure you have the following installed on your machine:
 1. **Python 3.12+**
 2. **`uv`** (Astral's fast Python package manager)
-   * To install on WSL/Linux/macOS: `curl -LsSf https://astral.sh/uv/install.sh | sh`
-3. **Docker & Docker Desktop** (with WSL integration enabled in settings)
+   * **WSL / Linux / macOS:** `curl -LsSf https://astral.sh/uv/install.sh | sh`
+   * **Windows (PowerShell):** `powershell -c "irm https://astral.sh/uv/install.ps1 | iex"`
+3. **Docker & Docker Desktop**
+   * *For WSL Devs:* You must enable "WSL integration" in Docker Desktop Settings -> Resources so WSL can access the Docker engine.
+   * *For Native Windows Devs:* No extra settings are needed.
+
 
 ---
 
@@ -35,10 +39,21 @@ uv venv
 
 ### 3. Activate the Environment
 You must activate the virtual environment in your terminal session before installing or running code:
-```bash
-source .venv/bin/activate
-```
+
+* **WSL / Linux / macOS:**
+  ```bash
+  source .venv/bin/activate
+  ```
+* **Windows (PowerShell):**
+  ```powershell
+  .venv\Scripts\Activate.ps1
+  ```
+* **Windows (Command Prompt):**
+  ```cmd
+  .venv\Scripts\activate.bat
+  ```
 *(Your terminal prompt should now be prefixed with `(.venv)`).*
+
 
 ### 4. Install Dependencies
 Sync all required libraries and generate your local environment packages:
