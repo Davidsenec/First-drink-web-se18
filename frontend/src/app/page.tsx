@@ -32,7 +32,7 @@ export default function Home() {
         Login
       </button>
       <div className={`${grayText} font-sans mt-2`}>
-        New here? <a href="register/page.tsx" className={`${yellowText}`}>Sign up here</a>
+        New here? <a href="register" className={`${yellowText}`}>Sign up here</a>
       </div>
     </div>
   );
