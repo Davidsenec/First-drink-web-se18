@@ -7,7 +7,7 @@ export default function RegisterPage() {
     return (
         <main className="min-h-screen bg-[#0B0B10] flex justify-center px-6 py-12">
         <div className="w-full max-w-xl p-8">
-            <a href="../page.tsx"><button className="mb-3 text-gray-500 hover:text-white">&#8592; Back</button></a>
+            <a href="../"><button className="mb-3 text-gray-500 hover:text-white">&#8592; Back</button></a>
             <h1 className="mb-6 text-5xl font-bold text-center">⚽ REGISTER</h1>
 
             <div className="flex flex-col gap-6">
