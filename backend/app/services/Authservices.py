@@ -41,12 +41,11 @@ class AuthServices:
         user_check = db.query(User).filter(User.user_name==user_in.user_name).first()
 
         if user_check:
-            if user_check.user_name == user_in.user_name:
-                raise HTTPException(status_code=400,detail="Username already used.")
+            raise HTTPException(status_code=400,detail="Username already used.")
         
         hashed_password = AuthServices.hash_password(user_in.password)
         new_user= User(**user_in.model_dump(exclude={"password"}),
-                       password =  hashed_password
+                       hashed_password =  hashed_password
                        )
         db.add(new_user)
         db.commit()
@@ -62,10 +61,10 @@ class AuthServices:
     @staticmethod
     def login(db:Session,user_in:UserLogin):
         user_check = db.query(User).filter(User.user_name==user_in.user_name).first()
-        if not user_check:
-            raise HTTPException(status_code=401,detail="username not valid",headers={"WWW-Authenticate": "Bearer"},)
+        if not user_check or not AuthServices.verify_password(user_in.password,user_check.hashed_password):
+            raise HTTPException(status_code=401,detail="incorrect username or password",headers={"WWW-Authenticate": "Bearer"},)
         elif not AuthServices.verify_password(user_in.password,user_check.hashed_password):
-            raise HTTPException(status_code=401,detail="incorrect password",headers={"WWW-Authenticate": "Bearer"},)
+            raise HTTPException(status_code=401,detail="incorrect username or password",headers={"WWW-Authenticate": "Bearer"},)
         token_payload = {"sub":user_check.user_name}
         token = AuthServices.create_access_token(token_payload)
         return {"access_token": token, "token_type": "bearer"}
