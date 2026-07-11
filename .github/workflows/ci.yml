@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Ruff Check
+        uses: astral-sh/ruff-action@v3
+        with:
+          src: "."
+
+      - name: Run Ruff Format Check
+        uses: astral-sh/ruff-action@v3
+        with:
+          src: "."
+          args: "format --check"
