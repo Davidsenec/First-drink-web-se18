@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from app.services.Authservices import AuthServices
 app = FastAPI(
     title="Party Check-In API",
     description="Backend API for First Drink party check-in management",
