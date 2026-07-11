@@ -32,7 +32,7 @@ cp .env.example .env
 *Note: The `.env` file is gitignored. Never commit your `.env` file to version control.*
 
 ### 2. Create the Virtual Environment
-Create an isolated virtual environment (`.venv`) inside the backend folder:
+Create an isolated virtual environment (`.venv`) in the project root:
 ```bash
 uv venv
 ```
