@@ -39,7 +39,7 @@ class AuthServices:
         return result
 
     @staticmethod
-    def register(repo: UserRepository,user_in:UserRegister):
+    def register(repo: UserRepository,user_in:UserRegister)->UserResponse:
         user_check = repo.check_user(user_in.user_name)
 
         if user_check:
@@ -50,20 +50,12 @@ class AuthServices:
                        hashed_password =  hashed_password
                        )
         repo.add_user(new_user)
-        user_return = UserResponse(
-            full_name=user_in.full_name,
-            nick_name=user_in.nick_name,
-            contact_info=user_in.contact_info,
-            address=user_in.address,
-        )
-        return user_return
+        return new_user
 
     @staticmethod
     def login(repo: UserRepository,user_in:UserLogin):
         user_check = repo.check_user(user_in.user_name)
         if not user_check or not AuthServices.verify_password(user_in.password,user_check.hashed_password):
-            raise HTTPException(status_code=401,detail="incorrect username or password",headers={"WWW-Authenticate": "Bearer"},)
-        elif not AuthServices.verify_password(user_in.password,user_check.hashed_password):
             raise HTTPException(status_code=401,detail="incorrect username or password",headers={"WWW-Authenticate": "Bearer"},)
         token_payload = {"sub":user_check.user_name}
         token = AuthServices.create_access_token(token_payload)
