@@ -1,4 +1,15 @@
 from fastapi import FastAPI
+from app.config.database import engine, Base
+from app.controllers.AuthRoute  import router as auth_router
+from contextlib import asynccontextmanager
+
+
+@asynccontextmanager
+async def lifespan(app:FastAPI):
+    Base.metadata.create_all(bind=engine)
+    yield
+    print("shutting down")
+
 
 app = FastAPI(
     title="Party Check-In API",
@@ -6,6 +17,7 @@ app = FastAPI(
     version="0.1.0",
 )
 
+app.include_router(auth_router)
 
 @app.get("/health", tags=["Health"])
 def health_check():
