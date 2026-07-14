@@ -11,7 +11,7 @@ class UserStatus(str, enum.Enum):
 
 class User(Base):
     __tablename__ = "users"
-    index = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True)
     user_name = Column(String, unique=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     full_name = Column(String, nullable=False)
