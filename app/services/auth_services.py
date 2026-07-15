@@ -15,7 +15,9 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 
 class AuthServices:
-    @staticmethod
+    def __init__(self, repo: UserRepository):
+        self.repo = repo
+
     def create_access_token(
         data: dict, expires_minutes: int = ACCESS_TOKEN_EXPIRE_MINUTES
     ) -> str:
@@ -24,23 +26,20 @@ class AuthServices:
         to_encode.update({"exp": expire})
         return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
-    @staticmethod
     def hash_password(plain_password: str) -> str:
         salt = bcrypt.gensalt()
         bytes = plain_password.encode("utf-8")
         hashed = bcrypt.hashpw(bytes, salt)
         return hashed.decode("utf-8")
 
-    @staticmethod
     def verify_password(plain_password: str, hashed_password: str) -> bool:
         user_byte = plain_password.encode("utf-8")
         hash_byte = hashed_password.encode("utf-8")
         result = bcrypt.checkpw(user_byte, hash_byte)
         return result
 
-    @staticmethod
-    def register(repo: UserRepository, user_in: UserRegister) -> UserResponse:
-        user_check = repo.check_user(user_in.user_name)
+    def register(self, user_in: UserRegister) -> UserResponse:
+        user_check = self.repo.check_user(user_in.user_name)
 
         if user_check:
             raise HTTPException(status_code=400, detail="Username already used.")
@@ -49,18 +48,16 @@ class AuthServices:
         new_user = User(
             **user_in.model_dump(exclude={"password"}), hashed_password=hashed_password
         )
-        repo.add_user(new_user)
+        self.repo.add_user(new_user)
         return new_user
 
-    @staticmethod
-    def login(repo: UserRepository, user_in: UserLogin):
-        user_check = repo.check_user(user_in.user_name)
+    def login(self, user_in: UserLogin):
+        user_check = self.repo.check_user(user_in.user_name)
         if not user_check or not AuthServices.verify_password(
             user_in.password, user_check.hashed_password
         ):
             raise HTTPException(
-                status_code=401,
-                detail="incorrect username or password",
+                status_code=404,
                 headers={"WWW-Authenticate": "Bearer"},
             )
         token_payload = {"sub": user_check.user_name}

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from app.config.database import engine, Base
-from app.controllers.AuthRoute import router as auth_router
-from app.controllers.UserRoute import router as user_router
+from app.controllers.auth_route import router as auth_router
+from app.controllers.user_route import router as user_router
 from contextlib import asynccontextmanager
 
 
