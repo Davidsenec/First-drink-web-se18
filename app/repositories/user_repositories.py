@@ -10,9 +10,6 @@ class UserRepository:
     def check_user(self, username: str):
         return self.db.query(User).filter(User.user_name == username).first()
 
-    def check_id(self, id: int):
-        return self.db.query(User).filter(User.id == id).first()
-
     def add_user(self, user_in: User):
         self.db.add(user_in)
         self.db.commit()

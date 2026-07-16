@@ -22,10 +22,10 @@ def get_current_user(
             headers={"WWW-Authenticate": "Bearer"},
         )
     user = repo.check_user(username)
-    if not username:
+    if not user:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="not found",
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="user not valid",
             headers={"WWW-Authenticate": "Bearer"},
         )
     return user
