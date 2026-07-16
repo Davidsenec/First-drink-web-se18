@@ -1,3 +1,9 @@
 .agents/
 /*.md
 !/README.md
+# Python / FastAPI backend ignore rules
+.venv/
+.env
+__pycache__/
+*.pyc
+.pytest_cache/

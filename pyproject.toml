@@ -1,0 +1,27 @@
+[project]
+name = "first-drink-backend"
+version = "0.1.0"
+description = "Party Check-In API Backend"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi~=0.139.0",
+    "pydantic>=2.7.0,<3.0.0",
+    "sqlalchemy>=2.0.30,<3.0.0",
+    "uvicorn[standard]>=0.30.0,<1.0.0",
+    "psycopg2-binary>=2.9.9,<3.0.0",
+    "alembic>=1.13.0,<2.0.0",
+    "bcrypt>=5.0.0",
+    "pyjwt>=2.13.0",
+    "pwdlib[argon2]>=0.3.0",
+    "python-multipart>=0.0.32",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0,<9.0.0",
+    "httpx>=0.27.0,<0.28.0",
+    "ruff>=0.15.20",
+    "pre-commit>=4.6.0",
+]
+
