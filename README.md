@@ -73,9 +73,13 @@ This setup runs the database inside Docker but runs your Python FastAPI code loc
    ```bash
    docker compose up db -d
    ```
-2. **Start the FastAPI backend locally:**
+2. **Apply database migrations to spin up the tables:**
    ```bash
-   uvicorn app.main:app --reload
+   uv run alembic upgrade head
+   ```
+3. **Start the FastAPI backend locally:**
+   ```bash
+   uv run uvicorn app.main:app --reload
    ```
 
 ---
@@ -85,11 +89,16 @@ This setup runs both the database and the backend API inside isolated Docker con
 
 1. **Launch the entire stack:**
    ```bash
-   docker compose up --build
+   docker compose up --build -d
    ```
-   *(To run in the background instead of streaming logs, add the `-d` flag).*
+   *(We run in the background `-d` so we can execute commands in the same terminal).*
 
-2. **To stop and wipe database caches (clean reset):**
+2. **Apply database migrations inside the running API container:**
+   ```bash
+   docker compose exec web alembic upgrade head
+   ```
+
+3. **To stop and wipe database caches (clean reset):**
    ```bash
    docker compose down -v
    ```
@@ -106,15 +115,15 @@ Once the application is running, open your browser and navigate to:
 
 ## 🗄️ Database Migrations (Alembic)
 
-Whenever you add, remove, or change fields in the SQLAlchemy models (under `app/models/`), you must generate a migration script to update the PostgreSQL tables:
+Whenever you add, remove, or change fields in the SQLAlchemy models (under `app/models/`), you must generate a migration script and apply it to update the PostgreSQL tables:
 
 1. **Generate a migration script:**
    ```bash
-   alembic revision --autogenerate -m "describe your changes here"
+   uv run alembic revision --autogenerate -m "describe your changes here"
    ```
 2. **Apply the migrations to your database:**
    ```bash
-   alembic upgrade head
+   uv run alembic upgrade head
    ```
 
 ## 📦 Adding New Dependencies
