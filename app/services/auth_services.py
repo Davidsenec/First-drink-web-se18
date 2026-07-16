@@ -57,7 +57,8 @@ class AuthServices:
             user_in.password, user_check.hashed_password
         ):
             raise HTTPException(
-                status_code=404,
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Incorrect username or password",
                 headers={"WWW-Authenticate": "Bearer"},
             )
         token_payload = {"sub": user_check.user_name}
