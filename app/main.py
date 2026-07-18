@@ -1,14 +1,32 @@
+import os
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import text
-from app.config.database import get_db
+from app.config.database import get_db, SessionLocal
 from app.controllers.auth_route import router as auth_router
 from app.controllers.user_route import router as user_router
+from app.init_db import seed_admin
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    if os.getenv("ENV") == "development":
+        db = SessionLocal()
+        try:
+            seed_admin(db)
+        except Exception as e:
+            print(f"Failed to auto-seed admin on startup: {e}")
+        finally:
+            db.close()
+    yield
+
 
 app = FastAPI(
     title="Party Check-In API",
     description="Backend API for First Drink party check-in management",
     version="0.1.0",
+    lifespan=lifespan,
 )
 
 app.include_router(auth_router)

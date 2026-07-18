@@ -41,6 +41,8 @@ COPY --from=builder /app/.venv /app/.venv
 
 # Copy only the application code
 COPY app ./app
+COPY alembic ./alembic
+COPY alembic.ini ./alembic.ini
 
 # Change ownership of app directory to non-root user
 RUN chown -R appuser:appgroup /app
