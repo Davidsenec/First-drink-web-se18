@@ -6,6 +6,7 @@ from sqlalchemy.sql import text
 from app.config.database import get_db, SessionLocal
 from app.controllers.auth_route import router as auth_router
 from app.controllers.user_route import router as user_router
+from app.controllers.admin_route import router as admin_router
 from app.init_db import seed_admin
 
 
@@ -31,6 +32,7 @@ app = FastAPI(
 
 app.include_router(auth_router)
 app.include_router(user_router)
+app.include_router(admin_router)
 
 
 @app.get("/health", tags=["Health"])

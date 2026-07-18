@@ -1,0 +1,23 @@
+from sqlalchemy.orm import Session
+from app.models.user import User
+from app.dtos.user import AdminResponse, UserStatusUpdate
+
+
+class AdminRepository:
+    def __init__(self, db: Session):
+        self.db = db
+
+    def get_all_data(self):
+        user_data = (
+            self.db.query(User).filter(User.is_admin.is_(False)).order_by(User.id).all()
+        )
+        return user_data
+
+    def check_id(self, id: int):
+        return self.db.query(User).filter(User.id == id).first()
+
+    def update_status(self, user: User, new_status: UserStatusUpdate) -> AdminResponse:
+        user.status = new_status.status
+        self.db.commit()
+        self.db.refresh(user)
+        return user
