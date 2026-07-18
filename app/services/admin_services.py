@@ -12,14 +12,12 @@ class AdminServices:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Access denied.",
-                headers={"WWW-Authenticate": "Bearer"},
             )
         user = self.repo.check_id(id)
         if not user:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Not Found",
-                headers={"WWW-Authenticate": "Bearer"},
             )
         return self.repo.update_status(user, new_status)
 
@@ -28,6 +26,5 @@ class AdminServices:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Access denied.",
-                headers={"WWW-Authenticate": "Bearer"},
             )
         return self.repo.get_all_data()

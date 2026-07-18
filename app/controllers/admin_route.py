@@ -16,7 +16,7 @@ def check_in(
     new_status: UserStatusUpdate,
     service: AdminServicesDep,
 ):
-    return service.edit_status(id, new_status, current_admin)
+    return service.edit_status(id, new_status.status, current_admin)
 
 
 @router.get(

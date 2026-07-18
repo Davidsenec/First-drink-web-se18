@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models.user import User
-from app.dtos.user import AdminResponse, UserStatusUpdate
+from app.models.user import User, UserStatus
 
 
 class AdminRepository:
@@ -16,8 +15,8 @@ class AdminRepository:
     def check_id(self, id: int):
         return self.db.query(User).filter(User.id == id).first()
 
-    def update_status(self, user: User, new_status: UserStatusUpdate) -> AdminResponse:
-        user.status = new_status.status
+    def update_status(self, user: User, new_status: UserStatus) -> User:
+        user.status = new_status
         self.db.commit()
         self.db.refresh(user)
         return user
