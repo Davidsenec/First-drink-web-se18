@@ -11,3 +11,8 @@ def update_info(
     info: UserUpdate, current_user: CurrentUserDep, service: UserServiceDep
 ):
     return service.update_info(info, current_user)
+
+
+@router.get("/user/me", status_code=status.HTTP_200_OK, response_model=UserResponse)
+def get_current_user(current_user: CurrentUserDep):
+    return current_user

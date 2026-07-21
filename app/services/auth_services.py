@@ -61,7 +61,7 @@ class AuthServices:
                 detail="Incorrect username or password",
                 headers={"WWW-Authenticate": "Bearer"},
             )
-        token_payload = {"sub": user_check.user_name}
+        token_payload = {"sub": user_check.user_name, "role": user_check.is_admin}
         token = AuthServices.create_access_token(token_payload)
         return {"access_token": token, "token_type": "bearer"}
 
