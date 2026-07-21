@@ -4,7 +4,10 @@ from app.dtos.user import UserRegister, UserLogin, UserResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 
-router = APIRouter()
+router = APIRouter(
+    prefix="auth",
+    tags=["auth"],
+)
 
 
 @router.post(

@@ -34,6 +34,7 @@ class UserResponse(BaseModel):
     nick_name: str
     contact_info: str
     address: str
+    is_admin: bool
 
 
 class AdminResponse(UserResponse):

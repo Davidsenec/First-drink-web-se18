@@ -61,9 +61,13 @@ class AuthServices:
                 detail="Incorrect username or password",
                 headers={"WWW-Authenticate": "Bearer"},
             )
-        token_payload = {"sub": user_check.user_name, "role": user_check.is_admin}
+        token_payload = {"sub": user_check.user_name}
         token = AuthServices.create_access_token(token_payload)
-        return {"access_token": token, "token_type": "bearer"}
+        return {
+            "access_token": token,
+            "token_type": "bearer",
+            "is_admin": user_check.is_admin,
+        }
 
     @staticmethod
     def check_jwt(token: str) -> dict:
