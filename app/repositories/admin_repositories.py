@@ -20,3 +20,8 @@ class AdminRepository:
         self.db.commit()
         self.db.refresh(user)
         return user
+
+    def delete_user(self, user: User):
+        self.db.delete(user)
+        self.db.commit()
+        return None

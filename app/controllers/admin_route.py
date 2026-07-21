@@ -27,3 +27,12 @@ def admin_get_user(
     service: AdminServicesDep,
 ):
     return service.get_user(current_admin)
+
+
+@router.delete("/admin/delete/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_user(
+    id: int,
+    current_admin: CurrentUserDep,
+    service: AdminServicesDep,
+):
+    return service.delete(id, current_admin)
