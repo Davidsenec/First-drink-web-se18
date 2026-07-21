@@ -1,4 +1,4 @@
-from app.models.user import User, UserStatus
+from app.models.user import UserStatus
 from fastapi import HTTPException, status
 from app.repositories.admin_repositories import AdminRepository
 
@@ -7,12 +7,7 @@ class AdminServices:
     def __init__(self, repo: AdminRepository):
         self.repo = repo
 
-    def edit_status(self, id: int, new_status: UserStatus, current_admin: User):
-        if not current_admin.is_admin:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Access denied.",
-            )
+    def edit_status(self, id: int, new_status: UserStatus):
         user = self.repo.check_id(id)
         if not user:
             raise HTTPException(
@@ -21,20 +16,10 @@ class AdminServices:
             )
         return self.repo.update_status(user, new_status)
 
-    def get_user(self, current_admin: User):
-        if not current_admin.is_admin:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Access denied.",
-            )
+    def get_user(self):
         return self.repo.get_all_data()
 
-    def delete(self, id: int, current_admin: User):
-        if not current_admin.is_admin:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Access denied.",
-            )
+    def delete(self, id: int):
         user = self.repo.check_id(id)
         if not user:
             raise HTTPException(

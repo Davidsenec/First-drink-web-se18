@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 
 router = APIRouter(
-    prefix="auth",
+    prefix="/auth",
     tags=["auth"],
 )
 
