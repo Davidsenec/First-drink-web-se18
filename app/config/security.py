@@ -4,7 +4,7 @@ from fastapi import Depends, HTTPException, status
 from app.config.dependencies import UserRepositoryDep, AuthServicesDep
 from app.models.user import User
 
-oauth2_bearer = OAuth2PasswordBearer(tokenUrl="/login")
+oauth2_bearer = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
 def get_current_user(
@@ -32,3 +32,14 @@ def get_current_user(
 
 
 CurrentUserDep = Annotated[User, Depends(get_current_user)]
+
+
+def get_current_admin(user: CurrentUserDep):
+    if not user.is_admin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="access denied"
+        )
+    return user
+
+
+CurrentAdminDep = Annotated[User, Depends(get_current_admin)]
