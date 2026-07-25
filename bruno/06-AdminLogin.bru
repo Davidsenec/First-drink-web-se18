@@ -1,0 +1,22 @@
+meta {
+  name: 06 - Login Admin
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/auth/login
+  body: form-urlencoded
+  auth: none
+}
+
+body:form-urlencoded {
+  username: {{adminUser}}
+  password: {{adminPassword}}
+}
+
+script:post-response {
+  if (res.status === 200) {
+    bru.setVar("adminToken", res.body.access_token);
+  }
+}

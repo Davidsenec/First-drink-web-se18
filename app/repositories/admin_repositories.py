@@ -16,12 +16,20 @@ class AdminRepository:
         return self.db.query(User).filter(User.id == id).first()
 
     def update_status(self, user: User, new_status: UserStatus) -> User:
-        user.status = new_status
-        self.db.commit()
-        self.db.refresh(user)
-        return user
+        try:
+            user.status = new_status
+            self.db.commit()
+            self.db.refresh(user)
+            return user
+        except Exception:
+            self.db.rollback()
+            raise
 
     def delete_user(self, user: User):
-        self.db.delete(user)
-        self.db.commit()
-        return None
+        try:
+            self.db.delete(user)
+            self.db.commit()
+            return None
+        except Exception:
+            self.db.rollback()
+            raise
