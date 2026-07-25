@@ -1,0 +1,15 @@
+first-drink-api.tock15.dev {
+    # Reverse proxy incoming HTTPS requests to FastAPI running in container
+    reverse_proxy localhost:8000
+
+    # Security headers
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+
+    # Enable gzip compression
+    encode gzip
+}
