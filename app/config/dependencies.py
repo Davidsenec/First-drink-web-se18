@@ -1,12 +1,14 @@
 from typing import Annotated
+
 from fastapi import Depends
 from sqlalchemy.orm import Session
+
 from app.config.database import get_db
-from app.repositories.user_repositories import UserRepository
 from app.repositories.admin_repositories import AdminRepository
-from app.services.user_services import UserServices
-from app.services.auth_services import AuthServices
+from app.repositories.user_repositories import UserRepository
 from app.services.admin_services import AdminServices
+from app.services.auth_services import AuthServices
+from app.services.user_services import UserServices
 
 DbSession = Annotated[Session, Depends(get_db)]
 

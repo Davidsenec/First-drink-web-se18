@@ -1,6 +1,7 @@
-from app.models.user import User
-from app.dtos.user import UserUpdate, UserResponse
 from sqlalchemy.orm import Session
+
+from app.dtos.user import UserResponse, UserUpdate
+from app.models.user import User
 
 
 class UserRepository:

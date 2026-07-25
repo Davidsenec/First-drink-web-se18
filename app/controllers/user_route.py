@@ -1,4 +1,5 @@
 from fastapi import APIRouter, status
+
 from app.config.dependencies import UserServiceDep
 from app.config.security import CurrentUserDep
 from app.dtos.user import UserResponse, UserUpdate

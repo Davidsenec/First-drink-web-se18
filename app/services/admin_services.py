@@ -1,5 +1,6 @@
-from app.models.user import UserStatus
 from fastapi import HTTPException, status
+
+from app.models.user import UserStatus
 from app.repositories.admin_repositories import AdminRepository
 
 

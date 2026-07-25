@@ -1,11 +1,13 @@
-import bcrypt
-from datetime import datetime, timedelta, timezone
-import jwt
-from fastapi import HTTPException, status
-from dotenv import load_dotenv
 import os
+from datetime import datetime, timedelta, timezone
+
+import bcrypt
+import jwt
+from dotenv import load_dotenv
+from fastapi import HTTPException, status
+
+from app.dtos.user import UserLogin, UserRegister, UserResponse
 from app.models.user import User
-from app.dtos.user import UserRegister, UserLogin, UserResponse
 from app.repositories.user_repositories import UserRepository
 
 load_dotenv()

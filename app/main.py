@@ -1,14 +1,16 @@
 import os
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Depends, HTTPException, status
+
+from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import text
-from app.config.database import get_db, SessionLocal
+
+from app.config.database import SessionLocal, get_db
+from app.controllers.admin_route import router as admin_router
 from app.controllers.auth_route import router as auth_router
 from app.controllers.user_route import router as user_router
-from app.controllers.admin_route import router as admin_router
 from app.init_db import seed_admin
-from fastapi.middleware.cors import CORSMiddleware
 
 
 @asynccontextmanager

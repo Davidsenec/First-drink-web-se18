@@ -1,7 +1,9 @@
-from fastapi.security import OAuth2PasswordBearer
 from typing import Annotated
+
 from fastapi import Depends, HTTPException, status
-from app.config.dependencies import UserRepositoryDep, AuthServicesDep
+from fastapi.security import OAuth2PasswordBearer
+
+from app.config.dependencies import AuthServicesDep, UserRepositoryDep
 from app.models.user import User
 
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl="/auth/login")
