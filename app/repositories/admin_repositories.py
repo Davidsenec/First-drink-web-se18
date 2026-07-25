@@ -30,7 +30,7 @@ class AdminRepository:
         try:
             self.db.delete(user)
             self.db.commit()
-            return None
+            return
         except Exception:
             self.db.rollback()
             raise

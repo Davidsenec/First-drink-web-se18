@@ -1,5 +1,5 @@
 import os
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import bcrypt
 import jwt
@@ -28,7 +28,7 @@ class AuthServices:
         data: dict, expires_minutes: int = ACCESS_TOKEN_EXPIRE_MINUTES
     ) -> str:
         to_encode = data.copy()
-        expire = datetime.now(timezone.utc) + timedelta(minutes=expires_minutes)
+        expire = datetime.now(UTC) + timedelta(minutes=expires_minutes)
         to_encode.update({"exp": expire})
         return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
