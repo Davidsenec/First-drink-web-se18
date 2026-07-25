@@ -1,6 +1,8 @@
 import enum
+
+from sqlalchemy import TIMESTAMP, Boolean, Column, Enum, Integer, String, text
+
 from app.config.database import Base
-from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, text, Enum
 
 
 class UserStatus(str, enum.Enum):

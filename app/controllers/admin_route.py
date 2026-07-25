@@ -1,8 +1,8 @@
 from fastapi import APIRouter, status
-from app.config.security import CurrentAdminDep
-from app.config.dependencies import AdminServicesDep
-from app.dtos.user import UserStatusUpdate, AdminResponse
 
+from app.config.dependencies import AdminServicesDep
+from app.config.security import CurrentAdminDep
+from app.dtos.user import AdminResponse, UserStatusUpdate
 
 router = APIRouter(
     prefix="/admin",

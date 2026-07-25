@@ -1,14 +1,16 @@
 import os
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Depends, HTTPException, status
+
+from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import text
-from app.config.database import get_db, SessionLocal
+
+from app.config.database import SessionLocal, get_db
+from app.controllers.admin_route import router as admin_router
 from app.controllers.auth_route import router as auth_router
 from app.controllers.user_route import router as user_router
-from app.controllers.admin_route import router as admin_router
 from app.init_db import seed_admin
-from fastapi.middleware.cors import CORSMiddleware
 
 
 @asynccontextmanager
@@ -35,9 +37,12 @@ app.include_router(auth_router)
 app.include_router(user_router)
 app.include_router(admin_router)
 
+raw_origins = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")
+origins = [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

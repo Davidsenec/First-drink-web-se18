@@ -1,0 +1,24 @@
+meta {
+  name: 05 - Update User Profile
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{baseUrl}}/users/edit_info
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{userToken}}
+}
+
+body:json {
+  {
+    "full_name": "Bruno Updated User",
+    "nick_name": "BrunoPro",
+    "contact_info": "bruno_updated@test.com",
+    "address": "456 Updated St"
+  }
+}

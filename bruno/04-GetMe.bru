@@ -1,0 +1,21 @@
+meta {
+  name: 04 - Get Current User Profile
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/users/me
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{userToken}}
+}
+
+script:post-response {
+  if (res.status === 200) {
+    bru.setVar("userId", res.body.id);
+  }
+}
