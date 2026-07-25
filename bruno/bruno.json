@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "First Drink API Collection",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

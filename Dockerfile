@@ -39,11 +39,14 @@ RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 # Copy virtual environment from builder stage
 COPY --from=builder /app/.venv /app/.venv
 
-# Copy only the application code
+# Copy application code and scripts
 COPY app ./app
+COPY alembic ./alembic
+COPY alembic.ini ./alembic.ini
+COPY scripts ./scripts
 
-# Change ownership of app directory to non-root user
-RUN chown -R appuser:appgroup /app
+# Change ownership of app directory to non-root user and ensure entrypoint script is executable
+RUN chown -R appuser:appgroup /app && chmod +x /app/scripts/entrypoint.sh
 
 # Switch to the secure non-root user
 USER appuser
@@ -51,5 +54,7 @@ USER appuser
 # Expose FastAPI's default port
 EXPOSE 8000
 
-# Start FastAPI server using uvicorn from the virtual environment
+# Set entrypoint script and default command
+ENTRYPOINT ["/app/scripts/entrypoint.sh"]
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+

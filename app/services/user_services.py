@@ -1,6 +1,6 @@
-from app.dtos.user import UserUpdate, UserResponse
-from app.repositories.user_repositories import UserRepository
+from app.dtos.user import UserResponse, UserUpdate
 from app.models.user import User
+from app.repositories.user_repositories import UserRepository
 
 
 class UserServices:

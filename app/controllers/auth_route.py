@@ -1,10 +1,15 @@
-from fastapi import APIRouter, Depends, status
-from app.config.dependencies import AuthServicesDep
-from app.dtos.user import UserRegister, UserLogin, UserResponse
-from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 
-router = APIRouter()
+from fastapi import APIRouter, Depends, status
+from fastapi.security import OAuth2PasswordRequestForm
+
+from app.config.dependencies import AuthServicesDep
+from app.dtos.user import UserLogin, UserRegister, UserResponse
+
+router = APIRouter(
+    prefix="/auth",
+    tags=["auth"],
+)
 
 
 @router.post(

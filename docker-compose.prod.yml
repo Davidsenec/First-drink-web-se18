@@ -1,0 +1,13 @@
+services:
+  # ==========================================
+  # Backend API Service (Production Overrides)
+  # ==========================================
+  web:
+    image: tock15/first-drink-api:latest
+    ports:
+      - "127.0.0.1:8000:8000" # Bound strictly to loopback interface for Caddy reverse proxy
+    environment:
+      - ENV=production
+      - CORS_ORIGINS=${CORS_ORIGINS}
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
+
