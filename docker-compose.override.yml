@@ -1,0 +1,25 @@
+services:
+  # ==========================================
+  # Database Service (Development Overrides)
+  # ==========================================
+  db:
+    ports:
+      - "5432:5432" # Exposed locally so you can connect via GUI tools (DBeaver/TablePlus)
+
+  # ==========================================
+  # Backend API Service (Development Overrides)
+  # ==========================================
+  web:
+    ports:
+      - "8000:8000"
+    environment:
+      - ENV=development
+      - ADMIN_USER=${ADMIN_USER}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
+    volumes:
+      # Mount local app code so changes trigger live-reloading
+      - ./app:/app/app
+      - ./alembic:/app/alembic
+      - ./alembic.ini:/app/alembic.ini
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
